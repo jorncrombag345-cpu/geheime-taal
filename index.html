@@ -1,206 +1,383 @@
+```html
 <!DOCTYPE html>
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🔐 Secret Language Translator</title>
+
+<title>🔐 Quantum Secret Translator</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap');
 
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:'Orbitron',sans-serif;
+}
+
+:root{
+--bg:#020617;
+--card:rgba(255,255,255,.07);
+--border:rgba(255,255,255,.12);
+--cyan:#00e5ff;
+--purple:#8b5cf6;
+--green:#22c55e;
+--red:#ef4444;
+--text:#ffffff;
+--muted:#94a3b8;
 }
 
 body{
+font-family:'Orbitron',sans-serif;
+background:var(--bg);
 height:100vh;
 overflow:hidden;
 display:flex;
 justify-content:center;
 align-items:center;
-background:#030712;
+color:var(--text);
+position:relative;
 }
 
-/* Sterren */
+/* Achtergrond */
+
 .stars{
 position:absolute;
 width:100%;
 height:100%;
 background-image:
 radial-gradient(white 1px, transparent 1px);
-background-size:50px 50px;
-animation:moveStars 60s linear infinite;
-opacity:0.4;
+background-size:40px 40px;
+opacity:.25;
+animation:moveStars 100s linear infinite;
 }
 
 @keyframes moveStars{
-from{transform:translateY(0);}
-to{transform:translateY(-500px);}
+from{
+transform:translateY(0);
+}
+to{
+transform:translateY(-1000px);
+}
 }
 
-/* Glow achtergrond */
-.glow1,.glow2{
+.grid{
+position:absolute;
+width:200%;
+height:200%;
+background:
+linear-gradient(rgba(0,229,255,.08) 1px, transparent 1px),
+linear-gradient(90deg, rgba(0,229,255,.08) 1px, transparent 1px);
+background-size:60px 60px;
+transform:rotateX(75deg);
+animation:gridMove 20s linear infinite;
+opacity:.25;
+}
+
+@keyframes gridMove{
+from{
+transform:translateY(0) rotateX(75deg);
+}
+to{
+transform:translateY(60px) rotateX(75deg);
+}
+}
+
+.glow1,.glow2,.glow3{
 position:absolute;
 border-radius:50%;
-filter:blur(100px);
+filter:blur(120px);
 }
 
 .glow1{
-width:300px;
-height:300px;
+width:400px;
+height:400px;
 background:#00e5ff;
-left:-50px;
-top:-50px;
+top:-100px;
+left:-100px;
+opacity:.35;
 }
 
 .glow2{
 width:350px;
 height:350px;
 background:#8b5cf6;
-right:-80px;
-bottom:-80px;
+bottom:-100px;
+right:-100px;
+opacity:.35;
 }
 
-/* Hoofdkaart */
+.glow3{
+width:300px;
+height:300px;
+background:#22c55e;
+top:40%;
+left:50%;
+transform:translate(-50%,-50%);
+opacity:.15;
+}
+
+/* Container */
+
 .container{
 position:relative;
 z-index:10;
 
-width:90%;
-max-width:800px;
+width:95%;
+max-width:950px;
 
 padding:40px;
 
-background:rgba(255,255,255,0.08);
-backdrop-filter:blur(25px);
+background:var(--card);
 
-border:1px solid rgba(255,255,255,0.15);
-border-radius:30px;
+border:1px solid var(--border);
+
+backdrop-filter:blur(30px);
+
+border-radius:35px;
 
 box-shadow:
-0 0 50px rgba(0,229,255,.2),
-0 0 100px rgba(139,92,246,.2);
+0 0 40px rgba(0,229,255,.2),
+0 0 80px rgba(139,92,246,.15);
 
-text-align:center;
+overflow:hidden;
 }
 
-/* Titel */
-h1{
-color:white;
-font-size:3rem;
+/* Header */
+
+.logo{
+font-size:3.2rem;
+font-weight:900;
+
+text-align:center;
+
+margin-bottom:10px;
+
+background:linear-gradient(
+90deg,
+var(--cyan),
+var(--purple)
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 
 text-shadow:
-0 0 10px #00e5ff,
-0 0 20px #00e5ff,
-0 0 40px #00e5ff;
-
-margin-bottom:15px;
+0 0 10px rgba(0,229,255,.5);
 }
 
 .subtitle{
-color:#cbd5e1;
-margin-bottom:25px;
+text-align:center;
+color:var(--muted);
+margin-bottom:35px;
+line-height:1.6;
 }
 
-/* Input */
-input{
+/* Panels */
+
+.top{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:25px;
+}
+
+.panel{
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+padding:25px;
+border-radius:25px;
+}
+
+/* Inputs */
+
+label{
+display:block;
+margin-bottom:12px;
+font-size:14px;
+color:#cbd5e1;
+}
+
+input, textarea, select{
 width:100%;
-padding:18px;
-font-size:18px;
+
+padding:16px;
 
 border:none;
 outline:none;
 
 border-radius:15px;
 
-background:rgba(255,255,255,0.1);
+background:rgba(255,255,255,.08);
+
 color:white;
 
-margin-bottom:20px;
+font-size:16px;
+
+margin-bottom:18px;
 }
 
-input::placeholder{
+textarea{
+resize:none;
+height:130px;
+}
+
+input::placeholder,
+textarea::placeholder{
 color:#94a3b8;
 }
 
-/* Knop */
+/* Buttons */
+
 button{
 width:100%;
-padding:18px;
-
-font-size:18px;
-font-weight:bold;
-
-cursor:pointer;
+padding:16px;
 
 border:none;
 border-radius:15px;
 
-background:
-linear-gradient(
-90deg,
-#00e5ff,
-#8b5cf6
-);
+font-size:16px;
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.3s;
 
 color:white;
 
-transition:.3s;
+margin-bottom:12px;
 }
 
-button:hover{
-transform:scale(1.03);
+.translateBtn{
+background:linear-gradient(
+90deg,
+var(--cyan),
+var(--purple)
+);
+}
+
+.translateBtn:hover{
+transform:translateY(-3px);
 
 box-shadow:
-0 0 20px #00e5ff,
-0 0 40px #8b5cf6;
+0 0 20px var(--cyan),
+0 0 40px var(--purple);
 }
 
-/* Resultaat */
-.result{
+.addBtn{
+background:linear-gradient(
+90deg,
+#22c55e,
+#16a34a
+);
+}
+
+.clearBtn{
+background:linear-gradient(
+90deg,
+#ef4444,
+#dc2626
+);
+}
+
+/* Output */
+
+.output{
 margin-top:25px;
+
 padding:25px;
 
-border-radius:20px;
+min-height:140px;
 
-background:rgba(255,255,255,.08);
+border-radius:25px;
 
-min-height:100px;
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
 
 display:flex;
 align-items:center;
 justify-content:center;
 
-font-size:2rem;
-color:white;
+text-align:center;
 
-transition:.3s;
+font-size:1.8rem;
+line-height:1.7;
+
+word-break:break-word;
 }
 
 /* Stats */
-.info{
-display:flex;
-justify-content:space-between;
-margin-top:20px;
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+
+margin-top:25px;
+}
+
+.stat{
+background:rgba(255,255,255,.05);
+padding:18px;
+border-radius:20px;
+text-align:center;
+border:1px solid rgba(255,255,255,.08);
+}
+
+.stat h3{
+font-size:2rem;
+margin-bottom:8px;
+color:var(--cyan);
+}
+
+.stat p{
+font-size:12px;
 color:#cbd5e1;
-font-size:14px;
 }
 
-.badge{
-display:inline-block;
-padding:8px 15px;
-margin-top:20px;
+/* Notification */
 
-border-radius:999px;
+.toast{
+position:fixed;
+top:25px;
+right:25px;
 
-background:rgba(255,255,255,.08);
-color:#fff;
+padding:16px 22px;
+
+border-radius:15px;
+
+background:#111827;
+border:1px solid rgba(255,255,255,.1);
+
+color:white;
+
+z-index:999;
+
+transform:translateX(300px);
+
+transition:.4s;
 }
 
-/* Animatie */
+.toast.show{
+transform:translateX(0);
+}
+
+/* Footer */
+
+.footer{
+margin-top:25px;
+text-align:center;
+color:#94a3b8;
+font-size:13px;
+}
+
+/* Animaties */
+
 .pop{
 animation:pop .4s ease;
 }
@@ -215,50 +392,157 @@ transform:scale(1);
 opacity:1;
 }
 }
+
+/* Responsive */
+
+@media(max-width:850px){
+
+.top{
+grid-template-columns:1fr;
+}
+
+.stats{
+grid-template-columns:1fr 1fr;
+}
+
+.logo{
+font-size:2.3rem;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
 <div class="stars"></div>
+<div class="grid"></div>
+
 <div class="glow1"></div>
 <div class="glow2"></div>
+<div class="glow3"></div>
 
 <div class="container">
 
-<h1>🔐 SECRET TRANSLATOR</h1>
+<div class="logo">
+🔐 QUANTUM TRANSLATOR
+</div>
 
-<p class="subtitle">
-Jullie geheime taal systeem
-</p>
+<div class="subtitle">
+Cyberpunk geheime taal systeem • Encryptie • Decoder • Opslag
+</div>
 
-<input
+<div class="top">
+
+<div class="panel">
+
+<label>📝 Tekst invoeren</label>
+
+<textarea
 id="input"
-placeholder="Typ een woord..."
->
+placeholder="Typ hier geheime woorden..."
+autocomplete="off"
+></textarea>
 
-<button onclick="translateWord()">
-⚡ VERTAAL
+<select id="mode">
+
+<option value="translate">
+Normaal ➜ Geheim
+</option>
+
+<option value="decode">
+Geheim ➜ Normaal
+</option>
+
+</select>
+
+<button class="translateBtn" onclick="translateText()">
+⚡ VERTAAL NU
 </button>
 
-<div id="output" class="result">
-Klaar voor vertaling...
+<button class="clearBtn" onclick="clearAll()">
+🗑️ RESET
+</button>
+
 </div>
 
-<div class="badge">
-🚀 GitHub Edition
+<div class="panel">
+
+<label>➕ Nieuw woord toevoegen</label>
+
+<input
+id="newWord"
+placeholder="Normaal woord..."
+autocomplete="off"
+>
+
+<input
+id="newCode"
+placeholder="Geheime code..."
+autocomplete="off"
+>
+
+<button class="addBtn" onclick="addWord()">
+🚀 WOORD TOEVOEGEN
+</button>
+
+<label>📚 Huidig woordenboek</label>
+
+<textarea
+id="dictionaryView"
+readonly
+></textarea>
+
 </div>
 
-<div class="info">
-<span>Aantal woorden: <span id="count"></span></span>
-<span>Status: Online</span>
 </div>
 
+<div id="output" class="output">
+🚀 Klaar voor geheime vertaling...
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<h3 id="count">0</h3>
+<p>WOORDEN</p>
+</div>
+
+<div class="stat">
+<h3 id="translations">0</h3>
+<p>VERTALINGEN</p>
+</div>
+
+<div class="stat">
+<h3 id="status">ONLINE</h3>
+<p>SYSTEEM</p>
+</div>
+
+<div class="stat">
+<h3 id="modeText">ENC</h3>
+<p>MODUS</p>
+</div>
+
+</div>
+
+<div class="footer">
+🌌 GitHub Quantum Edition • Secret Language AI System
+</div>
+
+</div>
+
+<div id="toast" class="toast">
+Opgeslagen!
 </div>
 
 <script>
 
-const woordenboek = {
+/* =========================
+WOORDENBOEK
+========================= */
+
+let woordenboek = {
 
 "hoi":"- . .",
 "hallo":"- - . .",
@@ -267,61 +551,279 @@ const woordenboek = {
 "geheim":"@ @ @",
 "ja":". -",
 "nee":"- .",
-
 "ik":"# .",
 "jij":". #",
-
 "docent":". .",
 "lol":". . .",
 "kippensoep":". . . . ."
 
 };
 
-document.getElementById("count").textContent =
+/* =========================
+LOCAL STORAGE
+========================= */
+
+if(localStorage.getItem("woordenboek")){
+
+woordenboek =
+JSON.parse(
+localStorage.getItem("woordenboek")
+);
+
+}
+
+/* =========================
+ELEMENTEN
+========================= */
+
+const output =
+document.getElementById("output");
+
+const dictionaryView =
+document.getElementById("dictionaryView");
+
+const count =
+document.getElementById("count");
+
+const translations =
+document.getElementById("translations");
+
+const toast =
+document.getElementById("toast");
+
+const modeText =
+document.getElementById("modeText");
+
+let translationCounter = 0;
+
+/* =========================
+UPDATE UI
+========================= */
+
+function updateUI(){
+
+count.textContent =
 Object.keys(woordenboek).length;
 
-function translateWord(){
+dictionaryView.value = "";
 
-const woord =
+for(const key in woordenboek){
+
+dictionaryView.value +=
+key + " = " + woordenboek[key] + "\n";
+
+}
+
+localStorage.setItem(
+"woordenboek",
+JSON.stringify(woordenboek)
+);
+
+}
+
+/* =========================
+TOAST
+========================= */
+
+function showToast(text){
+
+toast.textContent = text;
+
+toast.classList.add("show");
+
+setTimeout(()=>{
+
+toast.classList.remove("show");
+
+},2000);
+
+}
+
+/* =========================
+VERTALEN
+========================= */
+
+function translateText(){
+
+const input =
 document
 .getElementById("input")
 .value
 .toLowerCase()
 .trim();
 
-const output =
+const mode =
 document
-.getElementById("output");
+.getElementById("mode")
+.value;
 
-if(woordenboek[woord]){
+if(input === ""){
 
 output.textContent =
-woordenboek[woord];
+"⚠️ Vul eerst tekst in";
+
+return;
+
+}
+
+let result = "";
+
+/* NORMAAL -> GEHEIM */
+
+if(mode === "translate"){
+
+const words =
+input.split(" ");
+
+words.forEach(word=>{
+
+if(woordenboek[word]){
+
+result +=
+woordenboek[word] + " / ";
 
 }else{
 
-output.textContent =
-"❌ WOORD NIET GEVONDEN";
+result +=
+"[?] ";
 
 }
+
+});
+
+modeText.textContent = "ENC";
+
+}
+
+/* GEHEIM -> NORMAAL */
+
+else{
+
+const parts =
+input.split("/");
+
+parts.forEach(code=>{
+
+let found = false;
+
+for(const key in woordenboek){
+
+if(
+woordenboek[key] === code.trim()
+){
+
+result +=
+key + " ";
+
+found = true;
+
+}
+
+}
+
+if(!found){
+
+result += "[?] ";
+
+}
+
+});
+
+modeText.textContent = "DEC";
+
+}
+
+output.textContent =
+result;
 
 output.classList.remove("pop");
 void output.offsetWidth;
 output.classList.add("pop");
 
+translationCounter++;
+
+translations.textContent =
+translationCounter;
+
 }
+
+/* =========================
+WOORD TOEVOEGEN
+========================= */
+
+function addWord(){
+
+const word =
+document
+.getElementById("newWord")
+.value
+.toLowerCase()
+.trim();
+
+const code =
+document
+.getElementById("newCode")
+.value
+.trim();
+
+if(word === "" || code === ""){
+
+showToast("⚠️ Vul alles in");
+
+return;
+
+}
+
+woordenboek[word] = code;
+
+updateUI();
+
+showToast("✅ Toegevoegd!");
+
+document.getElementById("newWord").value = "";
+document.getElementById("newCode").value = "";
+
+}
+
+/* =========================
+RESET
+========================= */
+
+function clearAll(){
+
+document.getElementById("input").value = "";
+
+output.textContent =
+"🚀 Klaar voor geheime vertaling...";
+
+}
+
+/* =========================
+ENTER SUPPORT
+========================= */
 
 document
 .getElementById("input")
 .addEventListener("keydown",e=>{
 
-if(e.key==="Enter"){
-translateWord();
+if(e.key === "Enter" && !e.shiftKey){
+
+e.preventDefault();
+
+translateText();
+
 }
 
 });
+
+/* =========================
+INIT
+========================= */
+
+updateUI();
 
 </script>
 
 </body>
 </html>
+```
