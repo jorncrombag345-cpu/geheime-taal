@@ -61,4 +61,57 @@ button{
     width:100%;
     padding:15px;
     border:none;
-    border-radius:15
+    border-radius:15px;
+    cursor:pointer;
+    font-size:18px;
+    font-weight:bold;
+    background:white;
+    color:#1e3a8a;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.03);
+}
+
+#output{
+    margin-top:20px;
+    background:rgba(255,255,255,0.15);
+    padding:15px;
+    border-radius:15px;
+    min-height:80px;
+    word-wrap:break-word;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🔐 Geheime Taal Translator</h1>
+
+    <textarea id="input" placeholder="Typ hier je tekst..."></textarea>
+
+    <button onclick="translateText()">Vertalen</button>
+
+    <div id="output">Resultaat verschijnt hier...</div>
+</div>
+
+<script>
+function translateText() {
+    let text = document.getElementById("input").value;
+
+    // Voorbeeldregels
+    text = text
+        .replaceAll("a","@")
+        .replaceAll("e","3")
+        .replaceAll("i","!")
+        .replaceAll("o","0")
+        .replaceAll("s","$");
+
+    document.getElementById("output").textContent = text;
+}
+</script>
+
+</body>
+</html>
