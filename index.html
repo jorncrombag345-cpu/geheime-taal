@@ -6,21 +6,16 @@
 <title>Geheime Taal Translator</title>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, sans-serif;
-}
-
 body{
-    min-height:100vh;
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#0f172a,#1e3a8a,#7c3aed,#06b6d4);
+    background-size:400% 400%;
+    animation:bg 12s ease infinite;
     display:flex;
     justify-content:center;
     align-items:center;
-    background:linear-gradient(-45deg,#0f172a,#1e3a8a,#7c3aed,#06b6d4);
-    background-size:400% 400%;
-    animation:bg 12s ease infinite;
+    height:100vh;
 }
 
 @keyframes bg{
@@ -29,87 +24,80 @@ body{
     100%{background-position:0% 50%;}
 }
 
-.container{
+.box{
     width:90%;
-    max-width:700px;
-    background:rgba(255,255,255,0.1);
-    backdrop-filter:blur(15px);
-    border:1px solid rgba(255,255,255,0.2);
-    border-radius:25px;
+    max-width:600px;
     padding:30px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(15px);
     color:white;
-    box-shadow:0 8px 32px rgba(0,0,0,0.3);
-}
-
-h1{
     text-align:center;
-    margin-bottom:20px;
 }
 
-textarea{
-    width:100%;
-    height:120px;
-    border:none;
-    border-radius:15px;
+input{
+    width:90%;
     padding:15px;
-    resize:none;
-    font-size:16px;
-    margin-bottom:15px;
+    border:none;
+    border-radius:10px;
+    font-size:18px;
+    margin:10px 0;
 }
 
 button{
-    width:100%;
-    padding:15px;
+    padding:15px 30px;
     border:none;
-    border-radius:15px;
-    cursor:pointer;
+    border-radius:10px;
     font-size:18px;
-    font-weight:bold;
-    background:white;
-    color:#1e3a8a;
-    transition:0.3s;
-}
-
-button:hover{
-    transform:scale(1.03);
+    cursor:pointer;
+    margin-top:10px;
 }
 
 #output{
     margin-top:20px;
-    background:rgba(255,255,255,0.15);
-    padding:15px;
-    border-radius:15px;
-    min-height:80px;
-    word-wrap:break-word;
+    font-size:24px;
+    font-weight:bold;
 }
 </style>
 </head>
-
 <body>
 
-<div class="container">
+<div class="box">
     <h1>🔐 Geheime Taal Translator</h1>
 
-    <textarea id="input" placeholder="Typ hier je tekst..."></textarea>
+    <input id="input" placeholder="Typ een woord">
 
-    <button onclick="translateText()">Vertalen</button>
+    <br>
 
-    <div id="output">Resultaat verschijnt hier...</div>
+    <button onclick="translateWord()">Vertaal</button>
+
+    <div id="output">...</div>
 </div>
 
 <script>
-function translateText() {
-    let text = document.getElementById("input").value;
+const woordenboek = {
+    "hoi": "- . .",
+    "hallo": "- - . .",
+    "vriend": "* # *",
+    "test": "+ + -",
+    "geheim": "@ @ @",
+    "ja": ". -",
+    "nee": "- .",
+    "ik": "# .",
+    "jij": ". #"
+};
 
-    // Voorbeeldregels
-    text = text
-        .replaceAll("a","@")
-        .replaceAll("e","3")
-        .replaceAll("i","!")
-        .replaceAll("o","0")
-        .replaceAll("s","$");
+function translateWord() {
+    const woord = document
+        .getElementById("input")
+        .value
+        .toLowerCase()
+        .trim();
 
-    document.getElementById("output").textContent = text;
+    const vertaling = woordenboek[woord];
+
+    document.getElementById("output").textContent =
+        vertaling || "❌ Woord niet gevonden";
 }
 </script>
 
